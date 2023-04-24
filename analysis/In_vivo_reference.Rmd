@@ -1,0 +1,258 @@
+---
+title: "In_vivo_reference"
+output: html_document
+---
+
+
+
+
+
+***Session information***
+> sessionInfo()
+R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C            LC_COLLATE=C         LC_MONETARY=C        LC_MESSAGES=C        LC_PAPER=C           LC_NAME=C            LC_ADDRESS=C         LC_TELEPHONE=C      
+[11] LC_MEASUREMENT=C     LC_IDENTIFICATION=C 
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] car_3.1-1                   carData_3.0-5               caret_6.0-93                lattice_0.20-45             xgboost_1.7.3.1             scPred_1.9.2                SeuratDisk_0.0.0.9020       slingshot_2.5.2            
+ [9] TrajectoryUtils_1.4.0       SingleCellExperiment_1.18.1 SummarizedExperiment_1.26.1 Biobase_2.56.0              GenomicRanges_1.48.0        GenomeInfoDb_1.32.4         IRanges_2.30.1              S4Vectors_0.34.0           
+[17] BiocGenerics_0.42.0         MatrixGenerics_1.8.1        matrixStats_0.63.0          princurve_2.1.6             RColorBrewer_1.1-3          ggrepel_0.9.3               data.table_1.14.8           elementalist_0.0.0.9000    
+[25] patchwork_1.1.2             cowplot_1.1.1               sctransform_0.3.5           SeuratObject_4.1.3          Seurat_4.3.0                forcats_0.5.1               stringr_1.5.0               dplyr_1.1.0                
+[33] purrr_1.0.1                 readr_2.1.2                 tidyr_1.3.0                 tibble_3.1.8                ggplot2_3.4.1               tidyverse_1.3.1            
+
+loaded via a namespace (and not attached):
+  [1] utf8_1.2.3             spatstat.explore_3.0-6 reticulate_1.28        R.utils_2.11.0         tidyselect_1.2.0       htmlwidgets_1.6.1      grid_4.2.0             Rtsne_0.16             pROC_1.18.0           
+ [10] munsell_0.5.0          codetools_0.2-18       ica_1.0-3              future_1.31.0          miniUI_0.1.1.1         withr_2.5.0            spatstat.random_3.1-3  colorspace_2.1-0       progressr_0.13.0      
+ [19] knitr_1.42             rstudioapi_0.13        ROCR_1.0-11            tensor_1.5             listenv_0.9.0          labeling_0.4.2         harmony_0.1.1          GenomeInfoDbData_1.2.8 polyclip_1.10-4       
+ [28] bit64_4.0.5            farver_2.1.1           parallelly_1.34.0      vctrs_0.5.2            generics_0.1.3         ipred_0.9-13           xfun_0.37              timechange_0.2.0       R6_2.5.1              
+ [37] ggbeeswarm_0.7.1       hdf5r_1.3.8            bitops_1.0-7           spatstat.utils_3.0-1   DelayedArray_0.22.0    assertthat_0.2.1       promises_1.2.0.1       scales_1.2.1           nnet_7.3-17           
+ [46] beeswarm_0.4.0         gtable_0.3.1           globals_0.16.2         goftest_1.2-3          timeDate_4022.108      rlang_1.0.6            splines_4.2.0          lazyeval_0.2.2         ModelMetrics_1.2.2.2  
+ [55] spatstat.geom_3.0-6    broom_0.8.0            yaml_2.3.7             reshape2_1.4.4         abind_1.4-5            modelr_0.1.8           backports_1.4.1        httpuv_1.6.9           lava_1.7.2.1          
+ [64] tools_4.2.0            ellipsis_0.3.2         ggridges_0.5.4         Rcpp_1.0.10            plyr_1.8.8             zlibbioc_1.42.0        RCurl_1.98-1.10        rpart_4.1.16           deldir_1.0-6          
+ [73] pbapply_1.7-0          zoo_1.8-11             haven_2.5.0            cluster_2.1.3          fs_1.6.1               magrittr_2.0.3         scattermore_0.8        lmtest_0.9-40          reprex_2.0.1          
+ [82] RANN_2.6.1             fitdistrplus_1.1-8     hms_1.1.1              mime_0.12              evaluate_0.20          xtable_1.8-4           readxl_1.4.0           gridExtra_2.3          compiler_4.2.0        
+ [91] KernSmooth_2.23-20     crayon_1.5.2           R.oo_1.24.0            htmltools_0.5.4        later_1.3.0            tzdb_0.3.0             lubridate_1.9.2        DBI_1.1.2              dbplyr_2.1.1          
+[100] MASS_7.3-56            Matrix_1.5-3           cli_3.6.0              R.methodsS3_1.8.1      gower_1.0.1            parallel_4.2.0         igraph_1.4.1           pkgconfig_2.0.3        sp_1.6-0              
+[109] plotly_4.10.1          spatstat.sparse_3.0-0  recipes_1.0.5          xml2_1.3.3             foreach_1.5.2          vipor_0.4.5            hardhat_1.2.0          XVector_0.36.0         prodlim_2019.11.13    
+[118] rvest_1.0.2            digest_0.6.31          RcppAnnoy_0.0.20       spatstat.data_3.0-0    rmarkdown_2.20         cellranger_1.1.0       leiden_0.4.3           uwot_0.1.14            kernlab_0.9-32        
+[127] shiny_1.7.4            lifecycle_1.0.3        nlme_3.1-157           jsonlite_1.8.4         viridisLite_0.4.1      limma_3.52.4           fansi_1.0.4            pillar_1.8.1           ggrastr_1.0.1         
+[136] fastmap_1.1.1          httr_1.4.5             survival_3.3-1         glue_1.6.2             png_0.1-8              iterators_1.0.14       bit_4.0.5              class_7.3-20           stringi_1.7.12        
+[145] irlba_2.3.5.1          future.apply_1.10.0   
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=TRUE, echo=TRUE}
+# clear all objects from the work space
+rm(list=ls())
+
+# loading package(s)
+suppressPackageStartupMessages({
+library(data.table)                                       # for general data handling
+library(tidyverse)                                        # for general data handling, also includes Seurat dependency dplyr
+library(Seurat)                                           # for scRNA-Seq analysis
+library(SeuratDisk)                                       # for file conversion
+library(sctransform)                                      # for normalization, feature identification, and scaling
+library(cowplot)                                          # add-on to ggplot
+library(patchwork)                                        # for plotting
+library(RColorBrewer)                                     # for colorblind-friendly visualization
+library(scPred)                                           # for cell classification
+library(caret)                                            # for model training
+library(xgboost)                                          # for model training
+})
+
+# increase globals for sctransform
+options(future.globals.maxSize= 1024*1024^3)
+```
+
+```{r read, eval=TRUE, echo=TRUE}
+# read in reference data 
+Miao_2020_umap <- read.table(file = "/Miao_2020/umap.txt", sep = '\t', header = TRUE)
+Miao_2020_meta_data <- read.table(file = "/Miao_2020/metadata.txt", sep = '\t', header = TRUE)
+Miao_2020_raw_data <- read.table(file = "/Miao_2020/expression.txt", sep = '\t', header = TRUE)
+
+# format raw data and metadata for creating a seurat object
+Miao_2020_meta_data <- Miao_2020_meta_data[-1,]    # remove first row of metadata, which just describes the dataclass of each column
+Miao_2020_umap <- Miao_2020_umap[-1,]    # remove first row of metadata, which just describes the dataclass of each column
+
+#set first column as row names
+Miao_2020_meta_fix <- Miao_2020_meta_data[,-1]
+rownames(Miao_2020_meta_fix) <- Miao_2020_meta_data[,1]
+Miao_2020_raw_fix <- Miao_2020_raw_data[,-1]
+rownames(Miao_2020_raw_fix) <- Miao_2020_raw_data[,1]
+Miao_2020_umap_fix <- Miao_2020_umap[,-1]
+rownames(Miao_2020_umap_fix) <- Miao_2020_umap[,1]
+
+
+# create seurat object from reference data
+Miao_2020_reference <- CreateSeuratObject(counts = Miao_2020_raw_fix, meta.data = Miao_2020_meta_fix)
+
+# add origin info to obj metadata
+Miao_2020_reference <- AddMetaData(Miao_2020_reference, metadata="Miao_2020_fetal_heart", col.name="Origin")
+
+# fix the spelling of epicardium
+Miao_2020_reference@meta.data$Cell_type <- gsub("Epicarduim", "Epicardium", Miao_2020_reference@meta.data$Cell_type)
+
+# normalization, variance stabilization, and dimensionality reduction for reference
+Miao_2020_reference <- SCTransform(Miao_2020_reference, variable.features.n = 5000, verbose = FALSE)
+Miao_2020_reference <- RunPCA(Miao_2020_reference, npcs = 50, verbose = FALSE) 
+Miao_2020_reference <- RunUMAP(Miao_2020_reference, dims = 1:50, verbose = FALSE, return.model = TRUE)
+# break
+Miao_2020_reference <- FindNeighbors(Miao_2020_reference, dims = 1:50, verbose = FALSE)
+
+# train classifiers with scPred
+Miao_2020_reference <- getFeatureSpace(Miao_2020_reference, "Cell_type")
+Miao_2020_reference <- trainModel(Miao_2020_reference)
+
+# print number of cells, number of features used to train model, prediction model/method used, and performance metrics
+get_scpred(Miao_2020_reference)
+
+# visualize model performance per cell type 
+plot_probabilities(Miao_2020_reference)
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# read in cardiac EB
+cardiac_EB <- Read10X("/outs/filtered_feature_bc_matrix/")
+cardiac_EB <- CreateSeuratObject(cardiac_EB)
+
+# setting directory for deconvolution files
+dir <- "/YG-EM-ln1-EM314_human/"
+
+# add vireo information (demultiplex to identify individuals)
+add_vireo <- function(cardiac_EB, dir) {
+  donor_ids <- read.table(paste0(dir, 'vireo/donor_ids.tsv'), header = TRUE, stringsAsFactors = FALSE)
+  
+  cardiac_EB <- AddMetaData(cardiac_EB, donor_ids$donor_id,   col.name ='vireo.individual')
+  cardiac_EB <- AddMetaData(cardiac_EB, donor_ids$prob_max,   col.name ='vireo.prob.singlet')
+  
+  ambient.file <- paste0(dir, 'vireo/prop_ambient.tsv')
+  if (file.exists(ambient.file)) {
+    prop <- read.table(paste0(dir, 'vireo/prop_ambient.tsv'), header = TRUE, stringsAsFactors = FALSE)
+    
+    inds <- unique(donor_ids$best_singlet)
+    donor_ids$prop_donor <- 0
+    for (i in 1:length(inds)) {
+      w <- which(donor_ids$best_singlet==inds[i])
+      donor_ids$prop_donor[w] <- prop[w,inds[i]]
+    }
+    cardiac_EB <- AddMetaData(cardiac_EB, donor_ids$prop_donor, col.name ='vireo.prop.donor')
+  }
+  cardiac_EB
+}
+
+cardiac_EB <- add_vireo(cardiac_EB, dir)
+
+individual.colname <- ('vireo.individual')
+individual.colname <- individual.colname[which(individual.colname %in% colnames(cardiac_EB@meta.data))][1]
+
+# filter cardiac EB for assigned singlets containing ≥1,500 features per cell
+cardiac_EB <- subset(x = cardiac_EB, subset = vireo.individual == "doublet", invert = TRUE)
+cardiac_EB <- subset(x = cardiac_EB, subset = vireo.individual == "unassigned", invert = TRUE)
+cardiac_EB <- subset(cardiac_EB, subset = nFeature_RNA >= 1500)
+
+# normalization and add meta data
+cardiac_EB <- SCTransform(cardiac_EB, variable.features.n = 5000, verbose = FALSE)
+cardiac_EB <- AddMetaData(cardiac_EB, metadata="day_7_cardiacEB", col.name="Origin")
+
+
+# read in day 100 organoid and filter for ≥1,500 features per cell (per Silva publication analysis)
+day_100_organoid <- CreateSeuratObject(Read10X(("/Silva_2021/filtered_feature_bc_matrix/")))
+day_100_organoid <- subset(day_100_organoid, subset = nFeature_RNA >= 1500)
+
+# normalization and add meta data
+day_100_organoid <- SCTransform(day_100_organoid, variable.features.n = 5000, verbose = FALSE)
+day_100_organoid <- AddMetaData(day_100_organoid, metadata="day_100_organoid", col.name="Origin")
+
+# read in PBMCs (negative control)
+pbmc <- CreateSeuratObject(Read10X(("/20k_pbmc/filtered_feature_bc_matrix/")))
+
+# normalization and add meta data
+pbmc <- SCTransform(pbmc, variable.features.n = 5000, verbose = FALSE)
+pbmc <- AddMetaData(pbmc, metadata="pbmc", col.name="Origin")
+```
+
+
+
+
+
+
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# classify query cells
+cardiac_EB <- scPredict(cardiac_EB, Miao_2020_reference, threshold = 0.9)
+day_100_organoid <- scPredict(day_100_organoid, Miao_2020_reference, threshold = 0.9)
+pbmc <- scPredict(pbmc, Miao_2020_reference, threshold = 0.9)
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# run UMAP using only scPred classified cells (unassigned cells not plotted)
+sub_cardiac_EB <- subset(x = cardiac_EB, subset = scpred_prediction == "unassigned", invert = TRUE)
+sub_cardiac_EB <- RunUMAP(sub_cardiac_EB, reduction = "scpred", dims = 1:50)
+
+sub_day_100_organoid <- subset(x = day_100_organoid, subset = scpred_prediction == "unassigned", invert = TRUE)
+sub_day_100_organoid <- RunUMAP(sub_day_100_organoid, reduction = "scpred", dims = 1:50)
+
+sub_pbmc <- subset(x = pbmc, subset = scpred_prediction == "unassigned", invert = TRUE)
+sub_pbmc <- RunUMAP(sub_pbmc, reduction = "scpred", dims = 1:50)
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# colors for UMAP plots
+colors <- brewer.pal(n = 11, name = 'Paired')
+
+
+# plot UMAPs
+ref_plot <- DimPlot(object = Miao_2020_reference, reduction = "umap", group.by = "Cell_type", label = FALSE, repel = FALSE, cols = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99", "#E31A1C", "#FDBF6F", "#FF7F00", "#CAB2D6", "#6A3D9A", "#FFFF99")) + theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank(),
+        plot.title = element_blank())
+
+guided_plot <- DimPlot(sub_cardiac_EB, group.by = "scpred_prediction", label = FALSE, repel = FALSE, cols = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99", "#E31A1C", "#FDBF6F", "#FF7F00", "#CAB2D6", "#6A3D9A")) + theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank(),
+        plot.title = element_blank()) + NoLegend()
+
+organoid_plot <- DimPlot(sub_day_100_organoid, group.by = "scpred_prediction", label = FALSE, repel = FALSE, cols = c("#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99", "#E31A1C", "#FDBF6F", "#CAB2D6", "#6A3D9A")) + theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank(),
+        plot.title = element_blank()) + NoLegend()
+
+
+DimPlot(sub_pbmc, group.by = "scpred_prediction", label = FALSE, repel = FALSE, cols = c("#E31A1C", "#FDBF6F", "#CAB2D6")) + theme(axis.title.y = element_text(size = 8, color = "black"), axis.text.y = element_text(size = 8, color = "black"), axis.title.x = element_text(size = 8, colour = "black"), axis.text.x = element_text(size = 8, colour = "black"), panel.background = element_blank(), plot.title = element_blank())
+```
+
+
+
+
+```{r umaps, eval=TRUE, echo=TRUE}
+# setup layout for printing multiple plots
+umap_layout <- c(area(1, 1), area(2, 1), area(2, 2))
+ref_plot + guided_plot + organoid_plot + plot_layout(design = umap_layout)
+```
