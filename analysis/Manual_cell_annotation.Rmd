@@ -1,0 +1,533 @@
+---
+title: "Manual_cell_annotation"
+output: html_document
+---
+
+
+
+
+
+***Session information***
+> sessionInfo()
+R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C            LC_COLLATE=C         LC_MONETARY=C        LC_MESSAGES=C        LC_PAPER=C           LC_NAME=C            LC_ADDRESS=C         LC_TELEPHONE=C      
+[11] LC_MEASUREMENT=C     LC_IDENTIFICATION=C 
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] car_3.1-1                   carData_3.0-5               caret_6.0-93                lattice_0.20-45             xgboost_1.7.3.1             scPred_1.9.2                SeuratDisk_0.0.0.9020       slingshot_2.5.2            
+ [9] TrajectoryUtils_1.4.0       SingleCellExperiment_1.18.1 SummarizedExperiment_1.26.1 Biobase_2.56.0              GenomicRanges_1.48.0        GenomeInfoDb_1.32.4         IRanges_2.30.1              S4Vectors_0.34.0           
+[17] BiocGenerics_0.42.0         MatrixGenerics_1.8.1        matrixStats_0.63.0          princurve_2.1.6             RColorBrewer_1.1-3          ggrepel_0.9.3               data.table_1.14.8           elementalist_0.0.0.9000    
+[25] patchwork_1.1.2             cowplot_1.1.1               sctransform_0.3.5           SeuratObject_4.1.3          Seurat_4.3.0                forcats_0.5.1               stringr_1.5.0               dplyr_1.1.0                
+[33] purrr_1.0.1                 readr_2.1.2                 tidyr_1.3.0                 tibble_3.1.8                ggplot2_3.4.1               tidyverse_1.3.1            
+
+loaded via a namespace (and not attached):
+  [1] utf8_1.2.3             spatstat.explore_3.0-6 reticulate_1.28        R.utils_2.11.0         tidyselect_1.2.0       htmlwidgets_1.6.1      grid_4.2.0             Rtsne_0.16             pROC_1.18.0           
+ [10] munsell_0.5.0          codetools_0.2-18       ica_1.0-3              future_1.31.0          miniUI_0.1.1.1         withr_2.5.0            spatstat.random_3.1-3  colorspace_2.1-0       progressr_0.13.0      
+ [19] knitr_1.42             rstudioapi_0.13        ROCR_1.0-11            tensor_1.5             listenv_0.9.0          labeling_0.4.2         harmony_0.1.1          GenomeInfoDbData_1.2.8 polyclip_1.10-4       
+ [28] bit64_4.0.5            farver_2.1.1           parallelly_1.34.0      vctrs_0.5.2            generics_0.1.3         ipred_0.9-13           xfun_0.37              timechange_0.2.0       R6_2.5.1              
+ [37] ggbeeswarm_0.7.1       hdf5r_1.3.8            bitops_1.0-7           spatstat.utils_3.0-1   DelayedArray_0.22.0    assertthat_0.2.1       promises_1.2.0.1       scales_1.2.1           nnet_7.3-17           
+ [46] beeswarm_0.4.0         gtable_0.3.1           globals_0.16.2         goftest_1.2-3          timeDate_4022.108      rlang_1.0.6            splines_4.2.0          lazyeval_0.2.2         ModelMetrics_1.2.2.2  
+ [55] spatstat.geom_3.0-6    broom_0.8.0            yaml_2.3.7             reshape2_1.4.4         abind_1.4-5            modelr_0.1.8           backports_1.4.1        httpuv_1.6.9           lava_1.7.2.1          
+ [64] tools_4.2.0            ellipsis_0.3.2         ggridges_0.5.4         Rcpp_1.0.10            plyr_1.8.8             zlibbioc_1.42.0        RCurl_1.98-1.10        rpart_4.1.16           deldir_1.0-6          
+ [73] pbapply_1.7-0          zoo_1.8-11             haven_2.5.0            cluster_2.1.3          fs_1.6.1               magrittr_2.0.3         scattermore_0.8        lmtest_0.9-40          reprex_2.0.1          
+ [82] RANN_2.6.1             fitdistrplus_1.1-8     hms_1.1.1              mime_0.12              evaluate_0.20          xtable_1.8-4           readxl_1.4.0           gridExtra_2.3          compiler_4.2.0        
+ [91] KernSmooth_2.23-20     crayon_1.5.2           R.oo_1.24.0            htmltools_0.5.4        later_1.3.0            tzdb_0.3.0             lubridate_1.9.2        DBI_1.1.2              dbplyr_2.1.1          
+[100] MASS_7.3-56            Matrix_1.5-3           cli_3.6.0              R.methodsS3_1.8.1      gower_1.0.1            parallel_4.2.0         igraph_1.4.1           pkgconfig_2.0.3        sp_1.6-0              
+[109] plotly_4.10.1          spatstat.sparse_3.0-0  recipes_1.0.5          xml2_1.3.3             foreach_1.5.2          vipor_0.4.5            hardhat_1.2.0          XVector_0.36.0         prodlim_2019.11.13    
+[118] rvest_1.0.2            digest_0.6.31          RcppAnnoy_0.0.20       spatstat.data_3.0-0    rmarkdown_2.20         cellranger_1.1.0       leiden_0.4.3           uwot_0.1.14            kernlab_0.9-32        
+[127] shiny_1.7.4            lifecycle_1.0.3        nlme_3.1-157           jsonlite_1.8.4         viridisLite_0.4.1      limma_3.52.4           fansi_1.0.4            pillar_1.8.1           ggrastr_1.0.1         
+[136] fastmap_1.1.1          httr_1.4.5             survival_3.3-1         glue_1.6.2             png_0.1-8              iterators_1.0.14       bit_4.0.5              class_7.3-20           stringi_1.7.12        
+[145] irlba_2.3.5.1          future.apply_1.10.0   
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+# clear all objects from the work space
+rm(list=ls())
+
+# loading package(s)
+suppressPackageStartupMessages({
+library(data.table)                                       # for general data handling
+library(tidyverse)                                        # for general data handling, also includes Seurat dependency dplyr
+library(Seurat)                                           # for scRNA-Seq analysis
+library(sctransform)                                      # for normalization, feature identification, and scaling
+library(cowplot)                                          # add-on to ggplot
+library(patchwork)                                        # for plot layout
+library(ggrepel)                                          # for plotting 
+library(RColorBrewer)                                     # for colorblind-friendly visualization
+library(slingshot)                                        # for trajectory inference and lineage tracing
+})
+
+# increase globals for sctransform
+options(future.globals.maxSize= 1024*1024^3)
+```
+
+
+
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# read in 10X data
+day7_raw_data <- Read10X("/outs/filtered_feature_bc_matrix/")
+
+# creates a Seurat object
+day7_obj <- CreateSeuratObject(day7_raw_data)
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# demultiplex individuals
+# setting directory for deconvolution files
+dir <- "/YG-EM-ln1-EM314_human/"
+
+# add vireo information (demultiplex to identify individuals)
+add_vireo <- function(day7_obj, dir) {
+  donor_ids <- read.table(paste0(dir, 'vireo/donor_ids.tsv'), header = TRUE, stringsAsFactors = FALSE)
+  
+  day7_obj <- AddMetaData(day7_obj, donor_ids$donor_id,   col.name ='vireo.individual')
+  day7_obj <- AddMetaData(day7_obj, donor_ids$prob_max,   col.name ='vireo.prob.singlet')
+  
+  ambient.file <- paste0(dir, 'vireo/prop_ambient.tsv')
+  if (file.exists(ambient.file)) {
+    prop <- read.table(paste0(dir, 'vireo/prop_ambient.tsv'), header = TRUE, stringsAsFactors = FALSE)
+    
+    inds <- unique(donor_ids$best_singlet)
+    donor_ids$prop_donor <- 0
+    for (i in 1:length(inds)) {
+      w <- which(donor_ids$best_singlet==inds[i])
+      donor_ids$prop_donor[w] <- prop[w,inds[i]]
+    }
+    day7_obj <- AddMetaData(day7_obj, donor_ids$prop_donor, col.name ='vireo.prop.donor')
+  }
+  day7_obj
+}
+
+day7_obj <- add_vireo(day7_obj, dir)
+
+individual.colname <- ('vireo.individual')
+individual.colname <- individual.colname[which(individual.colname %in% colnames(day7_obj@meta.data))][1]
+
+# adding mitochondrial gene percentage to object metadata
+day7_obj[["percent.mt"]] <- PercentageFeatureSet(day7_obj, pattern = "^MT-")
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# print each object's information on cells and features
+NA19114_obj <- subset(x = day7_obj, subset = vireo.individual == "NA19114")
+NA19130_obj <- subset(x = day7_obj, subset = vireo.individual == "NA19130")
+NA19152_obj <- subset(x = day7_obj, subset = vireo.individual == "NA19152")
+doublet_obj <- subset(x = day7_obj, subset = vireo.individual == "doublet")
+unassigned_obj <- subset(x = day7_obj, subset = vireo.individual == "unassigned")
+
+paste("NA19114:")
+print( NA19114_obj)
+cat(paste('\n','NA19130:'))
+print(NA19130_obj)
+cat(paste('\n','NA19152:'))
+print(NA19152_obj)
+cat(paste('\n','doublet:'))
+print(doublet_obj)
+cat(paste('\n','unassigned:'))
+print(unassigned_obj)
+cat(paste('\n','total:'))
+print(day7_obj)
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+# filtering out unassigned and doublet cells, and cells with less than a certain number of features
+day7_obj <- subset(x = day7_obj, subset = vireo.individual == "doublet", invert = TRUE)
+day7_obj <- subset(x = day7_obj, subset = vireo.individual == "unassigned", invert = TRUE)
+day7_obj <- subset(day7_obj, subset = nFeature_RNA >= 1500)
+
+# print object total cells and features (post-filtering)
+day7_obj
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# normalization, variance stabilization, and dimensionality reduction   
+day7_sct_obj <- SCTransform(day7_obj, variable.features.n = 5000, verbose = FALSE)
+day7_sct_obj <- RunPCA(day7_sct_obj, npcs = 50, verbose = FALSE) 
+day7_sct_obj <- RunUMAP(day7_sct_obj, dims = 1:50, verbose = FALSE)
+# break
+day7_sct_obj <- FindNeighbors(day7_sct_obj, dims = 1:50, verbose = FALSE)
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# prepare color palette  
+my_nine_colors <- c("#117733", #green
+                    "#AA4499", #purple
+                    "#CC6677", #rose
+                    "#999933", #olive
+                    "#4477AA", #blue
+                    "#332288", #indigo
+                    "#DDCC77", #sand
+                    "#44AA99", #teal
+                    "#882255") #wine
+
+#pie(rep(1, 9), col = my_nine_colors)
+
+bar_colors <- c(
+                "#332288", #indigo
+                "#DDCC77", #sand
+                "#882255", #wine
+                "#44AA99", #teal
+                "#4477AA", #blue
+                "#AA4499", #purple
+                "#117733", #green
+                "#999933", #olive
+                "#CC6677") #rose
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# set cluster resolution
+day7_sct_obj <- FindClusters(day7_sct_obj, resolution = 0.2, verbose = FALSE)
+
+# change order of clusters 
+my_levels <- c( '0', '3', '2', '1', '6', '7', '4', '5', '8')
+day7_sct_obj@active.ident <- factor(x = day7_sct_obj@active.ident, levels = my_levels)
+
+#name clusters
+new_cluster_ids <- c("Cardiomyocytes", "Cardiac progenitor cells", "Fibroblasts", "Epicardial cells", "Endothelial/Endocardial cells",  "Hepatic endoderm", "Foregut endoderm", "Neuroectoderm", "Pluripotent stem cells")    
+names(new_cluster_ids) <- levels(day7_sct_obj)
+day7_sct_obj <- RenameIdents(day7_sct_obj, new_cluster_ids)
+day7_sct_obj$cell_type <- Idents(day7_sct_obj)
+
+# plot umap
+day7_umap <- DimPlot(day7_sct_obj, reduction = "umap", cols = my_nine_colors) + NoLegend() +
+  theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) + 
+        ggtitle("Guided differentiation culture")
+
+day7_totals <- as.data.frame(table(day7_sct_obj@active.ident))
+day7_totals <-  day7_totals %>% mutate(Percent = scales::label_percent(accuracy = .1)(Freq / sum(Freq)))
+
+day7_totals <- day7_totals %>% 
+        rename("Var1" = "Type",
+               "Percent" = "Percent",
+               "Freq" = "Count")
+
+day7_totals$Type <- factor(day7_totals$Type, levels = c(
+                                                        "Hepatic endoderm",
+                                                        "Foregut endoderm",
+                                                        "Pluripotent stem cells", 
+                                                        "Neuroectoderm", 
+                                                        "Endothelial/Endocardial cells",
+                                                        "Cardiac progenitor cells", 
+                                                        "Cardiomyocytes", 
+                                                        "Epicardial cells", 
+                                                        "Fibroblasts"))
+
+
+day7_bar <- ggplot(day7_totals, aes(x = Type, y = Count, fill = Type)) +
+  geom_bar(stat = "identity") +
+  coord_flip(clip = "off") +
+  geom_text(aes(label = Percent), size = 2, hjust = -0.01) +
+  scale_fill_manual(values = bar_colors) +
+  NoLegend() +
+  theme(axis.title.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y = element_text(size = 9, color = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) 
+
+
+# setup layout for printing multiple plots
+umap_layout <- c(area(1, 1), area(1, 2))
+
+#plot umap and cell composition
+day7_umap + day7_bar + plot_layout(design = umap_layout)
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# find differentially expressed genes for each cluster, report the top 10 of those that are positive
+all.markers <- FindAllMarkers(day7_sct_obj, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.1, verbose = TRUE)
+all.markers %>%
+  group_by(cluster) %>%
+    top_n(n = 50, wt = avg_log2FC) %>% 
+        print()
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+all.markers %>%
+    group_by(cluster) %>%
+    top_n(n = 10, wt = avg_log2FC) -> top
+DoHeatmap(day7_sct_obj, features = top$gene, group.colors = my_nine_colors, label = FALSE) + theme(legend.title=element_blank())
+```
+
+
+```{r, eval=TRUE, echo=TRUE, warning=FALSE}
+# plot marker gene expression by cluster
+features <- c("POU5F1", "L1TD1", 
+              "SOX2", "CRABP1", "SIX3",
+              "HHEX", "TBX3", "FOXA2", "EPCAM",
+              "TTR", "APOA2", "AFP",
+              "KDR", "TEK", "CDH5", "PECAM1", "NFATC1", 
+              "BMP5", "GATA4", "ZFPM2", "WT1", "TBX18",
+              "COL3A1", "DCN", "LUM", "POSTN",
+              "EYA1", "ISL1", "FGF10",
+              "TNNT2", "ACTN2", "RYR2", "CACNA1C", "PPARGC1A", "TNNI3")
+
+DotPlot(day7_sct_obj, col.min = 0, features = features, cols = c("light gray", "dark red"),) + 
+  theme_linedraw() + 
+    theme(
+      legend.direction = "horizontal",
+      legend.position = "bottom",
+      axis.title.y = element_blank(), 
+      axis.title.x = element_blank(), 
+      axis.text.x = element_text(angle = 60, vjust = 0, hjust=0),
+      axis.text.y = element_text(colour = my_nine_colors, face = "bold")) +                               
+      scale_x_discrete(position = "top")
+```
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+NA19114_obj <- subset(x = day7_sct_obj, subset = vireo.individual == "NA19114")
+NA19130_obj <- subset(x = day7_sct_obj, subset = vireo.individual == "NA19130")
+NA19152_obj <- subset(x = day7_sct_obj, subset = vireo.individual == "NA19152")
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+# plot umap
+NA19114_umap <- DimPlot(NA19114_obj, reduction = "umap", cols = my_nine_colors) + NoLegend() +
+  theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) + 
+        ggtitle("19114")
+
+NA19114_totals <- as.data.frame(table(NA19114_obj@active.ident))
+NA19114_totals <-  NA19114_totals %>% mutate(Percent = scales::label_percent(accuracy = .1)(Freq / sum(Freq)))
+
+NA19114_totals <- NA19114_totals %>% 
+        rename("Var1" = "Type",
+               "Percent" = "Percent",
+               "Freq" = "Count")
+
+NA19114_totals$Type <- factor(NA19114_totals$Type, levels = c(
+                                                        "Hepatic endoderm",
+                                                        "Foregut endoderm",
+                                                        "Pluripotent stem cells", 
+                                                        "Neuroectoderm", 
+                                                        "Endothelial/Endocardial cells",
+                                                        "Cardiac progenitor cells", 
+                                                        "Cardiomyocytes", 
+                                                        "Epicardial cells", 
+                                                        "Fibroblasts"))
+
+
+NA19114_bar <- ggplot(NA19114_totals, aes(x = Type, y = Count, fill = Type)) +
+  geom_bar(stat = "identity") +
+  coord_flip(clip = "off") +
+  geom_text(aes(label = Percent), size = 2, hjust = -0.01) +
+  scale_fill_manual(values = bar_colors) +
+  NoLegend() +
+  theme(axis.title.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y = element_text(size = 9, color = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) 
+
+NA19114_umap + NA19114_bar + plot_layout(design = umap_layout)
+```
+
+
+
+
+```{r, eval=TRUE, echo=TRUE}
+# plot umap
+NA19130_umap <- DimPlot(NA19130_obj, reduction = "umap", cols = my_nine_colors) + NoLegend() +
+  theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) + 
+        ggtitle("19130")
+
+NA19130_totals <- as.data.frame(table(NA19130_obj@active.ident))
+NA19130_totals <-  NA19130_totals %>% mutate(Percent = scales::label_percent(accuracy = .1)(Freq / sum(Freq)))
+
+NA19130_totals <- NA19130_totals %>% 
+        rename("Var1" = "Type",
+               "Percent" = "Percent",
+               "Freq" = "Count")
+
+NA19130_totals$Type <- factor(NA19130_totals$Type, levels = c(
+                                                        "Hepatic endoderm",
+                                                        "Foregut endoderm",
+                                                        "Pluripotent stem cells", 
+                                                        "Neuroectoderm", 
+                                                        "Endothelial/Endocardial cells",
+                                                        "Cardiac progenitor cells", 
+                                                        "Cardiomyocytes", 
+                                                        "Epicardial cells", 
+                                                        "Fibroblasts"))
+
+
+NA19130_bar <- ggplot(NA19130_totals, aes(x = Type, y = Count, fill = Type)) +
+  geom_bar(stat = "identity") +
+  coord_flip(clip = "off") +
+  geom_text(aes(label = Percent), size = 2, hjust = -0.01) +
+  scale_fill_manual(values = bar_colors) +
+  NoLegend() +
+  theme(axis.title.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y = element_text(size = 9, color = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) 
+
+NA19130_umap + NA19130_bar + plot_layout(design = umap_layout)
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+# plot umap
+NA19152_umap <- DimPlot(NA19152_obj, reduction = "umap", cols = my_nine_colors) + NoLegend() +
+  theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) + 
+        ggtitle("19152")
+
+NA19152_totals <- as.data.frame(table(NA19152_obj@active.ident))
+NA19152_totals <-  NA19152_totals %>% mutate(Percent = scales::label_percent(accuracy = .1)(Freq / sum(Freq)))
+
+NA19152_totals <- NA19152_totals %>% 
+        rename("Var1" = "Type",
+               "Percent" = "Percent",
+               "Freq" = "Count")
+
+NA19152_totals$Type <- factor(NA19152_totals$Type, levels = c(
+                                                        "Hepatic endoderm",
+                                                        "Foregut endoderm",
+                                                        "Pluripotent stem cells", 
+                                                        "Neuroectoderm", 
+                                                        "Endothelial/Endocardial cells",
+                                                        "Cardiac progenitor cells", 
+                                                        "Cardiomyocytes", 
+                                                        "Epicardial cells", 
+                                                        "Fibroblasts"))
+
+
+NA19152_bar <- ggplot(NA19152_totals, aes(x = Type, y = Count, fill = Type)) +
+  geom_bar(stat = "identity") +
+  coord_flip(clip = "off") +
+  geom_text(aes(label = Percent), size = 2, hjust = -0.01) +
+  scale_fill_manual(values = bar_colors) +
+  NoLegend() +
+  theme(axis.title.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y = element_text(size = 9, color = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) 
+
+NA19152_umap + NA19152_bar + plot_layout(design = umap_layout)
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+# subset out cardiomyocytes for subclustering
+gut <- subset(x = day7_sct_obj, subset = seurat_clusters == 4)
+
+# normalization, variance stabilization, and dimensionality reduction   
+gut <- SCTransform(gut, variable.features.n = 5000, verbose = FALSE)
+gut <- RunPCA(gut, npcs = 50, verbose = FALSE) 
+gut <- RunUMAP(gut, dims = 1:50, verbose = FALSE)
+# break
+gut <- FindNeighbors(gut, dims = 1:50, verbose = FALSE)
+
+gut <- FindClusters(gut, resolution = 0.1, verbose = FALSE)
+
+
+gut_markers <- FindAllMarkers(gut, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.1, verbose = TRUE)
+gut_markers %>%
+  group_by(cluster) %>%
+    top_n(n = 30, wt = avg_log2FC) %>% 
+        print()
+
+
+gut_cluster_ids <- c("Anterior", "Posterior")    
+names(gut_cluster_ids) <- levels(gut)
+gut <- RenameIdents(gut, gut_cluster_ids)
+```
+
+
+```{r, eval=TRUE, echo=TRUE}
+DimPlot(gut, reduction = "umap", cols = c("#66CCEE", "#EE7733")) +
+  theme(axis.title.y = element_text(size = 8, color = "black"),
+        axis.text.y = element_text(size = 8, color = "black"),
+        axis.title.x = element_text(size = 8, colour = "black"),
+        axis.text.x = element_text(size = 8, colour = "black"),
+        panel.background = element_blank()) +
+        ggtitle("Foregut endoderm")
+```
+
+
+
+
+```{r umaps, eval=TRUE, echo=TRUE}
+# anterior = SOX2, ISL1, IRX3
+# posterior = HNF4A, PROX1, FGB
+SOX2 <- VlnPlot(gut, "SOX2", cols = c("#66CCEE", "#EE7733")) + NoLegend() + theme(axis.title.x = element_blank(),
+                                                                                  axis.text.x = element_text(size = 10),
+                                                                                  axis.title.y = element_text(size=12))
+ISL1 <- VlnPlot(gut, "ISL1", cols = c("#66CCEE", "#EE7733")) + NoLegend() + theme(axis.title.x = element_blank(), 
+                                                                                  axis.text.x = element_text(size = 10),
+                                                                                  axis.title.y = element_blank())
+IRX3 <- VlnPlot(gut, "IRX3", cols = c("#66CCEE", "#EE7733")) + NoLegend() + theme(axis.title.x = element_blank(), 
+                                                                                  axis.text.x = element_text(size = 10),
+                                                                                  axis.title.y = element_blank())
+HNF4A <- VlnPlot(gut, "HNF4A", cols = c("#66CCEE", "#EE7733")) + NoLegend() + theme(axis.title.x = element_blank(),
+                                                                                    axis.text.x = element_text(size = 10),
+                                                                                    axis.title.y = element_text(size=12))
+PROX1 <- VlnPlot(gut, "PROX1", cols = c("#66CCEE", "#EE7733")) + NoLegend() + theme(axis.title.x = element_blank(), 
+                                                                                    axis.text.x = element_text(size = 10),
+                                                                                    axis.title.y = element_blank())
+FGB <- VlnPlot(gut, "FGB", cols = c("#66CCEE", "#EE7733")) + NoLegend() + theme(axis.title.x = element_blank(),
+                                                                                axis.text.x = element_text(size = 10),
+                                                                                axis.title.y = element_blank())
+
+# setup layout for printing multiple plots
+umap_layout <- c(area(1, 1), area(1, 2), area(1, 3))
+
+# plot 
+SOX2 + ISL1 + IRX3 + plot_layout(design = umap_layout)
+HNF4A + PROX1 + FGB + plot_layout(design = umap_layout)
+```
+
